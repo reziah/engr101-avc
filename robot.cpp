@@ -78,10 +78,10 @@ int drive() {
 		prop_component = proportional_signal/(120*1.0*KP);
 		deriv_component = derivative_signal/(240*1.0*KD); // ? - unclear how to calculate derivative component
 
-		PID_sum = 0-(prop_component + deriv_component);
+		PID_sum = prop_component + deriv_component;
 
-		leftSpeed = BASE_SPEED * PID_sum;
-		rightSpeed = -1 * BASE_SPEED * PID_sum;
+		leftSpeed = -1 * BASE_SPEED * PID_sum;
+		rightSpeed = BASE_SPEED * PID_sum;
 	}
 
         if (leftSpeed > 250) {
