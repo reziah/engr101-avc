@@ -23,13 +23,13 @@ using namespace std;
 
 class Maze {
 private:
-    int type; // 1 == Line Maze, 2 == Wall Maze
+    int mazeType; // 3 == Line Maze, 4 == Wall Maze
     char nodeValues [][];
     map<char, Node> nodeMap;
 
 public:
-    Maze(int type) {
-        if (type == 1) {
+    Maze(int mazeType) {
+        if (mazeType == 3) {
             nodeValues = {
                     // id,N,E,S,W
                     {'A','D','C','','B'},
@@ -53,8 +53,42 @@ public:
                     {'S','','','','O'},
                     {'T','','','Q',''}
             };
+
+            for (int i = 0; i < (sizeof(nodeValues)/ sizeof(nodeValues[0])); i++) {
+                //TODO: may run into a problem with pointers here
+                Node newNode(nodeValues[i][0],nodeValues[i][1],nodeValues[i][2],nodeValues[i][3],nodeValues[i][4]);
+
+                nodeMap.insert(pair<char, Node>(nodeValues[i][0], newNode));
+            }
         }
     }
 
+    Node getNode(char id) {
+        return nodeMap[id];
+    };
+
 };
+
+int lineMaze(char previousNode, char destinationNode, int confused, int currentDirection){
+    // confused -- 0 = not confused, 1 = confused
+    // currentDirection -- 0 = unknown, 1 = north, 2 = east, 3 = south, 4 = west
+
+    int dir = currentDirection;
+    Node destination = Maze.getNode(destinationNode);
+    Node previous = Maze.getNode(previousNode);
+
+
+    //TODO: Drive forwards so that previous junction is no longer in sight
+
+    while () { //TODO: check that we are not at a junction
+        followLine(); //TODO: implement this
+    }
+
+    if (confused == 0) {
+
+        if (destination) {}
+    } else if (confused == 1) {
+
+    }
+}
 
