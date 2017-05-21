@@ -84,10 +84,46 @@ int lineMaze(char previousNode, char destinationNode, int confused, int currentD
         followLine(); //TODO: implement this
     }
 
+    //TODO: Identify possible paths when arrived at junction
+
     if (confused == 0) {
 
-        if (destination) {}
+        //TODO:check that destination has paths in same directions as current junction
+        //TODO: true north or relative north?
+        if (destination == junction) {
+            if (next node in route is north) {
+                lineMaze();
+            } else if (next node east) {
+                rotate(-90);
+                lineMaze();
+            } else if (next node south) {
+                rotate(180);
+                lineMaze();
+            } else if (next node west) {
+                rotate(90);
+                lineMaze();
+            }
+
+        } else if (prevNode == node before end) {
+            wallMaze();
+        }
+
+        else {
+            lineMaze('','',1,0); // we are lost
+        }
     } else if (confused == 1) {
+
+        if (QUADRANT == 2) { //TODO:keep track of current quadrant, be able to identify that we've gone back into 2
+            rotate(180); //TODO: implement rotate
+            followLine();
+        } else if (junction) {
+            //TODO: implement something to either find direction and location or find start (time dependant)
+        } else {
+            // We can't see a line
+            while(cant see line) {
+                reverse();
+            }
+        }
 
     }
 }

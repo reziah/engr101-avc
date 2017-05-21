@@ -17,5 +17,7 @@ public:
         southNode = south;
         westNode = west;
     }
-    char getNeighbour(char direction);
+    char getNeighbour(char direction) {
+        //TODO: implement this
+    };
 };
