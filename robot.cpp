@@ -3,6 +3,7 @@
 #include<iostream>
 #include"E101.h"
 #include"camera.h"
+#include"maze.h"
 
 using namespace std;
 
