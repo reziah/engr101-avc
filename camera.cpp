@@ -47,3 +47,39 @@ int whiteness() {
 
 	return whiteness;
 }
+
+string identifyPaths() {
+    /* When called identifies if there are paths to the north, east and west.
+     * returns a string containing "NEW" if junction has all paths, "E" if only eastern path etc.
+     * if a empty string is returned, then this method shouldn't have been called in the first place eg. in curves quad2
+     */
+    double accuracy = 0.95; // min. percent of pixels that should be white to be fairly confident of a path.
+    string paths = "";
+    double northPixels;
+    double eastPixels;
+    double westPixels;
+    int sampleInterval = 2; // samples every nth pixel
+
+    take_picture();
+
+    //North
+    //TODO: why are we sampling whole image, only need top half?
+    for (int i = 1; i < 240/sampleInterval; i++) {
+        int w = get_pixel(i*sampleInterval,160,3);
+
+        // Filters noise by simplifying pixels as either black or white, depending on th white value of the pixel
+        if (w > 127) {
+            northPixels += 1;
+        }
+    }
+
+
+
+    //East
+
+    //West
+
+    if (northPixels >= 240/sampleInterval * accuracy) {
+        paths += "N"; //TODO: does this work in c++?
+    }
+}
