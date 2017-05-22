@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<time.h>
 #include<iostream>
+#include<fstream>
 #include"E101.h"
 #include"camera.h"
 #include"maze.h"
@@ -15,6 +16,9 @@ int GATE_PORT = 0000; //TODO: Find correct port for gate
 float KP = 0.7; // proportionality constant
 float KD = 0.4; // derivative constant
 int BASE_SPEED = 32;
+
+// Log File
+ofstream logfile("./logs/" + time(0) + ".csv");
 
 int stopMotors() {
     // Sets speed of both motors to 0
@@ -49,6 +53,17 @@ int openGate() {
 //        openGate(); // Try again
 //    }
     return 0;
+}
+
+void logData() {
+    //TODO: Maybe main opense log, writes first line. drive calls log each step and passes it's values
+    if (logfile.is_open()) {
+        logfile << "time,KP,KD,PID_sum,leftSpeed,rightSpeed,error,previous_error.\n";
+
+        while () { // vehicle is navigating course
+            logfile <<
+        }
+    }
 }
 
 int drive() {
