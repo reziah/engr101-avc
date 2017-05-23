@@ -76,8 +76,8 @@ int drive() {
 	} else {
 		cout << "Raw Error: " << error << "\n";
 
-		prop_component = proportional_signal/(120*1.0*KP);
-		deriv_component = derivative_signal/(240*1.0*KD); // ? - unclear how to calculate derivative component
+		prop_component = ((proportional_signal/(120*1.0))*KP);
+		deriv_component = ((derivative_signal/(240*1.0))*KD); // ? - unclear how to calculate derivative component
 
 		PID_sum = prop_component + deriv_component;
 
