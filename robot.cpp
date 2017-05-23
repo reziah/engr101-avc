@@ -81,8 +81,8 @@ int drive() {
 
 		PID_sum = prop_component + deriv_component;
 
-		leftSpeed = -1 * BASE_SPEED * PID_sum;
-		rightSpeed = BASE_SPEED * PID_sum;
+        	leftSpeed = (BASE_SPEED + (PID_sum*250));
+        	rightSpeed = (BASE_SPEED - (PID_sum*250));
 	}
 
         if (leftSpeed > 250) {
