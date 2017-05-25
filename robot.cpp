@@ -9,8 +9,8 @@
 using namespace std;
 
 // Global Variables
-char GATE_IP[15] = {'1','9','2','.','1','6','8','.','1','.','2','5','5'}; //TODO: Find correct IP for gate
-int GATE_PORT = 0000; //TODO: Find correct port for gate
+char GATE_IP[15] = {'1','3','0','.','1','9','5','.','6','.','1','9','6'};
+int GATE_PORT = 1024;
 
 //Tuning
 float KP = 0.7; // proportionality constant
@@ -28,18 +28,19 @@ int stopMotors() {
 }
 
 int openGate() {
-    //TODO: Find out what the actual gate opening process is, e101 wiki and Arthur's notes no help
 
     // Listens for gate to broadcast password, then sends that password to the gate, resulting in the gate opening.
 
-    char password[10]; // receive_from_server() returns an int according to e101.h
-    char message[10] = {'g','i','v','e',' ','p','w'}; // unclear what message should be sent to get password
+    char password[24]; // receive_from_server() returns an int according to e101.h
+    char message[11] = {0x1B, '[', '5', 'm', 'P','l','e','a','s','e'}; 
 
     connect_to_server(GATE_IP, GATE_PORT);
+    
+    send_to_server(message);
 
     // receive password from gate
-    int pwInt = receive_from_server(message);
-    sprintf(password,"%ld",pwInt); // convert to char[]
+    int pwInt = receive_from_server(password);
+    printf("%s %ld\n",password,pwInt); // convert to char[]
 
     // send password to gate, should open
     send_to_server(password);
@@ -91,13 +92,13 @@ int drive() {
 	} else {
 		cout << "Raw Error: " << error << "\n";
 
-		prop_component = proportional_signal/(120*1.0*KP);
-		deriv_component = derivative_signal/(240*1.0*KD); // ? - unclear how to calculate derivative component
+		prop_component = ((proportional_signal/(120*1.0))*KP);
+		deriv_component = ((derivative_signal/(240*1.0))*KD); // ? - unclear how to calculate derivative component
 
 		PID_sum = prop_component + deriv_component;
 
-		leftSpeed = -1 * BASE_SPEED * PID_sum;
-		rightSpeed = BASE_SPEED * PID_sum;
+        	leftSpeed = (BASE_SPEED + (PID_sum*250));
+        	rightSpeed = (BASE_SPEED - (PID_sum*250));
 	}
 
         if (leftSpeed > 250) {
