@@ -87,6 +87,46 @@ public:
 
 };
 
+boolean hasRelativePaths(Node node, String junctionpaths, int direction){
+    char paths[4] = new char[];
+    if (direction != 0) {
+        if (node.getNeighbour('N') != null) {
+            paths[0] = 'N';
+        }
+        if (node.getNeighbour('E') != null) {
+            paths[1] = 'E';
+        }
+        if (node.getNeighbour('S') != null) {
+            paths[2] = 'S';
+        }
+        if (node.getNeighbour('W') != null) {
+            paths[3] = 'W';
+        }
+
+        // change true direction to relative direction.
+        for (int i = 1; i < direction; i++) {
+            char x = paths[0];
+            paths[0] = paths[1];
+            paths[1] = paths[2];
+            paths[2] = paths[3];
+            paths[3] = x;
+        }
+
+    }
+    if (junctionpaths.find("N") != std::string::npos && paths[0] = null) {
+        return false;
+    }
+    if (junctionpaths.find("E") != std::string::npos && paths[1] = null) {
+        return false;
+    }
+    if (junctionpaths.find("W") != std::string::npos && paths[3] = null) {
+        return false;
+    }
+
+    return true;
+}
+
+
 int lineMaze(char previousNode, char destinationNode, int confused, int currentDirection){
     // confused -- 0 = not confused, 1 = confused
     // currentDirection -- 0 = unknown, 1 = north, 2 = east, 3 = south, 4 = west
@@ -94,6 +134,7 @@ int lineMaze(char previousNode, char destinationNode, int confused, int currentD
     int dir = currentDirection;
     Node destination = Maze.getNode(destinationNode);
     Node previous = Maze.getNode(previousNode);
+    String junctionPaths = "";
 
 
     //TODO: Drive forwards so that previous junction is no longer in sight
@@ -102,13 +143,11 @@ int lineMaze(char previousNode, char destinationNode, int confused, int currentD
         followLine(); //TODO: implement this
     }
 
-    //TODO: Identify possible paths when arrived at junction
+    junctionPaths = identifyPaths();
 
     if (confused == 0) {
 
-        //TODO:check that destination has paths in same directions as current junction
-        //TODO: true north or relative north?
-        if (destination == junction) {
+        if (hasRelativePaths(destination, junctionPaths, dir)) {
             if (next node in route is north) {
                 lineMaze();
             } else if (next node east) {
