@@ -4,7 +4,7 @@
 #include<fstream>
 #include"E101.h"
 #include"camera.h"
-#include"maze.h"
+//#include"maze.h"
 
 using namespace std;
 
@@ -18,7 +18,7 @@ float KD = 0.4; // derivative constant
 int BASE_SPEED = 32;
 
 // Log File
-ofstream logfile("./logs/" + time(0) + ".csv");
+//ofstream logfile("./logs/" + time(0) + ".csv");
 
 int stopMotors() {
     // Sets speed of both motors to 0
@@ -56,16 +56,16 @@ int openGate() {
     return 0;
 }
 
-void logData() {
-    //TODO: Maybe main opense log, writes first line. drive calls log each step and passes it's values
-    if (logfile.is_open()) {
-        logfile << "time,KP,KD,PID_sum,leftSpeed,rightSpeed,error,previous_error.\n";
-
-        while () { // vehicle is navigating course
-            logfile <<
-        }
-    }
-}
+//void logData() {
+//    //TODO: Maybe main opense log, writes first line. drive calls log each step and passes it's values
+//    if (logfile.is_open()) {
+//        logfile << "time,KP,KD,PID_sum,leftSpeed,rightSpeed,error,previous_error.\n";
+//
+//        while () { // vehicle is navigating course
+//            logfile <<
+//        }
+//    }
+//}
 
 int drive() {
 
