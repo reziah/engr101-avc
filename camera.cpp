@@ -63,8 +63,7 @@ string identifyPaths() {
     take_picture();
 
     //North
-    //TODO: why are we sampling whole image, only need top half?
-    for (int i = 1; i < 240/sampleInterval; i++) {
+    for (int i = 1; i < 120/sampleInterval; i++) {
         int w = get_pixel(i*sampleInterval,160,3);
 
         // Filters noise by simplifying pixels as either black or white, depending on th white value of the pixel
@@ -72,14 +71,37 @@ string identifyPaths() {
             northPixels += 1;
         }
     }
-
-
-
     //East
+    for (int i = 160; i < 320/sampleInterval; i++) {
+        int w = get_pixel(120,i*sampleInterval,3);
+
+        // Filters noise by simplifying pixels as either black or white, depending on th white value of the pixel
+        if (w > 127) {
+            eastPixels += 1;
+        }
+    }
 
     //West
+    for (int i = 1; i < 160/sampleInterval; i++) {
+        int w = get_pixel(120,i*sampleInterval,3);
 
-    if (northPixels >= 240/sampleInterval * accuracy) {
-        paths += "N"; //TODO: does this work in c++?
+        // Filters noise by simplifying pixels as either black or white, depending on th white value of the pixel
+        if (w > 127) {
+            westPixels += 1;
+        }
     }
+
+    if (northPixels >= 120/sampleInterval * accuracy) {
+        paths += "N";
+    }
+
+    if (eastPixels >= 160/sampleInterval * accuracy) {
+        paths += "E";
+    }
+
+    if (westPixels >= 160/sampleInterval * accuracy) {
+        paths += "W";
+    }
+
+    return paths;
 }
